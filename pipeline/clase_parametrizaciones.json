@@ -1,0 +1,190 @@
+{
+	"name": "clase_parametrizaciones",
+	"properties": {
+		"description": "Se copiaran por parametro dos archivos distintos del datallake a otra carpeta.",
+		"activities": [
+			{
+				"name": "Cargas",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "file_csv_foglia",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.cta_almacenamiento",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.folder_name_csv",
+								"type": "Expression"
+							},
+							"file": "cargas_2023.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "parquet",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.cta_almacenamiento",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.folder_name_csv",
+								"type": "Expression"
+							},
+							"file": {
+								"value": "@pipeline().parameters.folder_name_parquet",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Sitios",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "file_csv_foglia",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.cta_almacenamiento",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.folder_name_csv",
+								"type": "Expression"
+							},
+							"file": "sitios_2023.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "parquet",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.cta_almacenamiento",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.folder_name_parquet",
+								"type": "Expression"
+							},
+							"file": {
+								"value": "@pipeline().parameters.folder_name_parquet",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"cta_almacenamiento": {
+				"type": "string",
+				"defaultValue": "pablofoglia"
+			},
+			"folder_name_csv": {
+				"type": "string",
+				"defaultValue": "parametrizacion/files_csv"
+			},
+			"folder_name_parquet": {
+				"type": "string",
+				"defaultValue": "parametrizacion/files_parquet"
+			}
+		},
+		"folder": {
+			"name": "pablo_foglia"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-10T15:13:19Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

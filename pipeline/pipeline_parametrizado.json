@@ -1,0 +1,190 @@
+{
+	"name": "pipeline_parametrizado",
+	"properties": {
+		"activities": [
+			{
+				"name": "Sitios",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "files_csv_camila",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.contenedor",
+								"type": "Expression"
+							},
+							"carpeta": {
+								"value": "@pipeline().parameters.carpeta_origen",
+								"type": "Expression"
+							},
+							"archivo": "sitios_2023.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "files_parquet_camila",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.contenedor",
+								"type": "Expression"
+							},
+							"carpeta": {
+								"value": "@pipeline().parameters.carpeta_destino",
+								"type": "Expression"
+							},
+							"archivo": "sitios_2023.parquet"
+						}
+					}
+				]
+			},
+			{
+				"name": "Cargas",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Sitios",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "files_csv_camila",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.contenedor",
+								"type": "Expression"
+							},
+							"carpeta": {
+								"value": "@pipeline().parameters.carpeta_origen",
+								"type": "Expression"
+							},
+							"archivo": "cargas_2023.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "files_parquet_camila",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.contenedor",
+								"type": "Expression"
+							},
+							"carpeta": {
+								"value": "@pipeline().parameters.carpeta_destino",
+								"type": "Expression"
+							},
+							"archivo": "cargas_2023.parquet"
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"contenedor": {
+				"type": "string",
+				"defaultValue": "camilagomez"
+			},
+			"carpeta_origen": {
+				"type": "string",
+				"defaultValue": "ADF-practica/parametrizacion/origen"
+			},
+			"carpeta_destino": {
+				"type": "string",
+				"defaultValue": "ADF-practica/parametrizacion/destino"
+			}
+		},
+		"folder": {
+			"name": "Camila-Gomez"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-10T15:03:40Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

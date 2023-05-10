@@ -1,0 +1,25 @@
+{
+	"name": "trigger_Azul_Selser",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pl_tarea_Azul_Selser",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 4,
+				"startTime": "2023-05-09T14:44:00",
+				"endTime": "2023-05-09T20:49:24",
+				"timeZone": "Argentina Standard Time"
+			}
+		}
+	}
+}

@@ -1,0 +1,183 @@
+{
+	"name": "pipeline_parametrizacion_maria_sol",
+	"properties": {
+		"activities": [
+			{
+				"name": "Sitios",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "files_csv_maria_sol",
+						"type": "DatasetReference",
+						"parameters": {
+							"contenedor": {
+								"value": "@pipeline().parameters.nombre_contenedor",
+								"type": "Expression"
+							},
+							"carpeta": {
+								"value": "@pipeline().parameters.nombre_carpetacsv",
+								"type": "Expression"
+							},
+							"archivo": "sitios_2023.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "files_parquet_maria_sol",
+						"type": "DatasetReference",
+						"parameters": {
+							"contenedor": {
+								"value": "@pipeline().parameters.nombre_contenedor",
+								"type": "Expression"
+							},
+							"carpeta": {
+								"value": "@pipeline().parameters.nombre_carpetaparquet",
+								"type": "Expression"
+							},
+							"archivo": "sitios_2023"
+						}
+					}
+				]
+			},
+			{
+				"name": "cargas",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "files_csv_maria_sol",
+						"type": "DatasetReference",
+						"parameters": {
+							"contenedor": {
+								"value": "@pipeline().parameters.nombre_contenedor",
+								"type": "Expression"
+							},
+							"carpeta": {
+								"value": "@pipeline().parameters.nombre_carpetacsv",
+								"type": "Expression"
+							},
+							"archivo": "cargas_2023.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "files_parquet_maria_sol",
+						"type": "DatasetReference",
+						"parameters": {
+							"contenedor": {
+								"value": "@pipeline().parameters.nombre_contenedor",
+								"type": "Expression"
+							},
+							"carpeta": {
+								"value": "@pipeline().parameters.nombre_carpetaparquet",
+								"type": "Expression"
+							},
+							"archivo": "cargas_2023"
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"nombre_contenedor": {
+				"type": "string",
+				"defaultValue": "mariasolserritelli"
+			},
+			"nombre_carpetaparquet": {
+				"type": "string",
+				"defaultValue": "files_parquet"
+			},
+			"nombre_carpetacsv": {
+				"type": "string",
+				"defaultValue": "files_csv"
+			}
+		},
+		"folder": {
+			"name": "maria_sol_serritelli"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-10T15:02:30Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,26 @@
+{
+	"name": "neymar_sucio_origen",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "neymarSucio",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "josegerstner"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": "neymarSucio.csv"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

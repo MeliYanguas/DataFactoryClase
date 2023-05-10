@@ -1,0 +1,24 @@
+{
+	"name": "triggerJulianCohen",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pl_vehicles_Julian_Cohen",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 4,
+				"startTime": "2023-05-09T14:50:00",
+				"timeZone": "Argentina Standard Time"
+			}
+		}
+	}
+}

@@ -1,0 +1,25 @@
+{
+	"name": "salida_pasajeparquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1_maria_sol",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "maria_sol_serritelli"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "salida_pasajeparquet",
+				"folderPath": "pasaje",
+				"fileSystem": "mariasolserritelli"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,25 @@
+{
+	"name": "entrada_star_wors",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "datalakeformacion1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "juan_maidana"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "part-00000-tid-8912598863808830074-17d97441-144b-49fa-be78-f3a262cedce6-124-1-c000.snappy.parquet",
+				"folderPath": "star-wors/raw_data/characters",
+				"fileSystem": "juanmaidana"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

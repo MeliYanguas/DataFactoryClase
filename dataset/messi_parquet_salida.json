@@ -1,0 +1,25 @@
+{
+	"name": "messi_parquet_salida",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "datalakeformacion1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ernestodavogustto"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "messi_parquet_salida",
+				"folderPath": "ADFPractica/salida/messi_parquet",
+				"fileSystem": "ernestodavogustto"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

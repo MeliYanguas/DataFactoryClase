@@ -1,0 +1,183 @@
+{
+	"name": "parametricacion_JUANCA",
+	"properties": {
+		"activities": [
+			{
+				"name": "sitios",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "file_csv_JuanCaceffo",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.cta_storage",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.folder_name_csv",
+								"type": "Expression"
+							},
+							"file": "sitios_2023.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "paruqet_juanca",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.cta_storage",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.folder_name_parquet",
+								"type": "Expression"
+							},
+							"file": "sitios"
+						}
+					}
+				]
+			},
+			{
+				"name": "cargas",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "file_csv_JuanCaceffo",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.cta_storage",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.folder_name_csv",
+								"type": "Expression"
+							},
+							"file": "cargas_2023.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "paruqet_juanca",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.cta_storage",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.folder_name_parquet",
+								"type": "Expression"
+							},
+							"file": "cargas_2023"
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"cta_storage": {
+				"type": "string",
+				"defaultValue": "juancaceffo"
+			},
+			"folder_name_csv": {
+				"type": "string",
+				"defaultValue": "entrada_ADF"
+			},
+			"folder_name_parquet": {
+				"type": "string",
+				"defaultValue": "salida_ADF"
+			}
+		},
+		"folder": {
+			"name": "JuanCaceffo"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-10T15:05:41Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

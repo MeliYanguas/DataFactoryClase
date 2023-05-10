@@ -1,0 +1,183 @@
+{
+	"name": "pl_parametrizacion",
+	"properties": {
+		"activities": [
+			{
+				"name": "Cargas",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "files_csv_ernesto",
+						"type": "DatasetReference",
+						"parameters": {
+							"cta_almacenamiento": {
+								"value": "@pipeline().parameters.cta_almacenamiento",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.folder_csv",
+								"type": "Expression"
+							},
+							"file": "cargas_2023.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "files_parquet_ernesto",
+						"type": "DatasetReference",
+						"parameters": {
+							"cta_almacenamiento": {
+								"value": "@pipeline().parameters.cta_almacenamiento",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.folder_parquet",
+								"type": "Expression"
+							},
+							"file": "cargas"
+						}
+					}
+				]
+			},
+			{
+				"name": "Sitios",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "files_csv_ernesto",
+						"type": "DatasetReference",
+						"parameters": {
+							"cta_almacenamiento": {
+								"value": "@pipeline().parameters.cta_almacenamiento",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.folder_csv",
+								"type": "Expression"
+							},
+							"file": "sitios_2023.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "files_parquet_ernesto",
+						"type": "DatasetReference",
+						"parameters": {
+							"cta_almacenamiento": {
+								"value": "@pipeline().parameters.cta_almacenamiento",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.folder_parquet",
+								"type": "Expression"
+							},
+							"file": "sitios"
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"cta_almacenamiento": {
+				"type": "string",
+				"defaultValue": "ernestodavogustto"
+			},
+			"folder_csv": {
+				"type": "string",
+				"defaultValue": "ADFPractica/files_csv"
+			},
+			"folder_parquet": {
+				"type": "string",
+				"defaultValue": "ADFPractica/files_parquet"
+			}
+		},
+		"folder": {
+			"name": "ernestodavogustto/parametrizaciones"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-10T15:40:15Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

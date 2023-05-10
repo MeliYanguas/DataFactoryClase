@@ -1,0 +1,14 @@
+{
+	"name": "neymarSucio",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "Me traigo el csv de Neymar desde el Github de Pedro",
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://raw.githubusercontent.com/PPereyraAN/Cursos/main/",
+			"enableServerCertificateValidation": false,
+			"authenticationType": "Anonymous"
+		}
+	}
+}

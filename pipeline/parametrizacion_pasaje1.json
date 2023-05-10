@@ -1,0 +1,184 @@
+{
+	"name": "parametrizacion_pasaje1",
+	"properties": {
+		"description": "clase 14 parametrización",
+		"activities": [
+			{
+				"name": "Cargas",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "file_csv_melina",
+						"type": "DatasetReference",
+						"parameters": {
+							"contenedor": {
+								"value": "@pipeline().parameters.contenedor",
+								"type": "Expression"
+							},
+							"carpeta": {
+								"value": "@pipeline().parameters.folder_name_csv",
+								"type": "Expression"
+							},
+							"archivo": "cargas_2023.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "file_parquet_melina",
+						"type": "DatasetReference",
+						"parameters": {
+							"contenedor": {
+								"value": "@pipeline().parameters.contenedor",
+								"type": "Expression"
+							},
+							"carpeta": {
+								"value": "@pipeline().parameters.folder_name_parquet",
+								"type": "Expression"
+							},
+							"archivo": "cargas_p_2023"
+						}
+					}
+				]
+			},
+			{
+				"name": "Sitios",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "file_csv_melina",
+						"type": "DatasetReference",
+						"parameters": {
+							"contenedor": {
+								"value": "@pipeline().parameters.contenedor",
+								"type": "Expression"
+							},
+							"carpeta": {
+								"value": "@pipeline().parameters.folder_name_csv",
+								"type": "Expression"
+							},
+							"archivo": "sitios_2023.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "file_parquet_melina",
+						"type": "DatasetReference",
+						"parameters": {
+							"contenedor": {
+								"value": "@pipeline().parameters.contenedor",
+								"type": "Expression"
+							},
+							"carpeta": {
+								"value": "@pipeline().parameters.folder_name_parquet",
+								"type": "Expression"
+							},
+							"archivo": "sitios_p_2023"
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"contenedor": {
+				"type": "string",
+				"defaultValue": "melinayanguas"
+			},
+			"folder_name_csv": {
+				"type": "string",
+				"defaultValue": "clase-parametrizacion/file_csv"
+			},
+			"folder_name_parquet": {
+				"type": "string",
+				"defaultValue": "clase-parametrizacion/file_parquet"
+			}
+		},
+		"folder": {
+			"name": "melina-yanguas"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-10T15:10:33Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

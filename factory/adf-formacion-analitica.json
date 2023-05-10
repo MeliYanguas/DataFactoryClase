@@ -1,0 +1,9 @@
+{
+	"name": "adf-formacion-analitica",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "6d970505-01ed-4405-9be2-72eee49f238a",
+		"tenantId": "3048dc87-43f0-4100-9acb-ae1971c79395"
+	}
+}

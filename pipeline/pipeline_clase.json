@@ -1,0 +1,190 @@
+{
+	"name": "pipeline_clase",
+	"properties": {
+		"activities": [
+			{
+				"name": "Cargas",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Sitio_carga",
+						"type": "DatasetReference",
+						"parameters": {
+							"contenedor": {
+								"value": "@pipeline().parameters.contenedor",
+								"type": "Expression"
+							},
+							"carpeta": {
+								"value": "@pipeline().parameters.carpeta_entrada",
+								"type": "Expression"
+							},
+							"archivo": "cargas_2023.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "file_parquet_mj",
+						"type": "DatasetReference",
+						"parameters": {
+							"contenedor": {
+								"value": "@pipeline().parameters.contenedor",
+								"type": "Expression"
+							},
+							"carpeta": {
+								"value": "@pipeline().parameters.carpeta_salida",
+								"type": "Expression"
+							},
+							"archivo": "cargas_2023.parquet"
+						}
+					}
+				]
+			},
+			{
+				"name": "Sitios",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Cargas",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Sitio_carga",
+						"type": "DatasetReference",
+						"parameters": {
+							"contenedor": {
+								"value": "@pipeline().parameters.contenedor",
+								"type": "Expression"
+							},
+							"carpeta": {
+								"value": "@pipeline().parameters.carpeta_entrada",
+								"type": "Expression"
+							},
+							"archivo": "sitios_2023.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "file_parquet_mj",
+						"type": "DatasetReference",
+						"parameters": {
+							"contenedor": {
+								"value": "@pipeline().parameters.contenedor",
+								"type": "Expression"
+							},
+							"carpeta": {
+								"value": "@pipeline().parameters.carpeta_salida",
+								"type": "Expression"
+							},
+							"archivo": "sitios_2023.parquet"
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"contenedor": {
+				"type": "string",
+				"defaultValue": "juanmaidana"
+			},
+			"carpeta_entrada": {
+				"type": "string",
+				"defaultValue": "Entradas"
+			},
+			"carpeta_salida": {
+				"type": "string",
+				"defaultValue": "Salida"
+			}
+		},
+		"folder": {
+			"name": "juan_maidana"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-10T15:03:50Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
