@@ -1,0 +1,36 @@
+{
+	"name": "entradaMovies",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "datalakeformacion1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "melina-yanguas/movies"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "movies.csv",
+				"folderPath": "clasedf/origen/movies",
+				"fileSystem": "melinayanguas"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	}
+}
